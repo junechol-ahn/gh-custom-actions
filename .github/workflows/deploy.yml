@@ -13,7 +13,7 @@ jobs:
         id: load-with-cache
         uses: ./.github/actions/cached-deps
         with:
-          caching: 'false'
+          caching: "false"
       - name: Output cache information
         run: echo "Cache used? ${{ steps.load-with-cache.outputs.used-cache }}"
       - name: Lint code
@@ -63,10 +63,14 @@ jobs:
       - name: Output contents
         run: ls
       - name: Deploy site
-        uses: ./.github/actions/deploy-s3-javascript
+        id: deploy-site
+        uses: ./.github/actions/deploy-s3-docker
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         with:
           bucket: junchol-ahn-gh-custom-actions
           dist-folder: ./dist
+      - name: Output information
+        run: |
+          echo "Live URL: ${{ steps.deploy-site.outputs.website-url }}"
