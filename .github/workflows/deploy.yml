@@ -72,7 +72,7 @@ jobs:
           aws-region: ap-southeast-2
       - name: Deploy site
         id: deploy-site
-        uses: ./.github/actions/deploy-s3-docker
+        uses: ./.github/actions/deploy-s3-javascript
         with:
           bucket: junchol-ahn-gh-custom-actions
           dist-folder: ./dist
